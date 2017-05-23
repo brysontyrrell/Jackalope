@@ -20,6 +20,7 @@ object using :func:`jackalope.create_app`.
 
 from jackalope import create_app
 
+application = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
-    app.run(threaded=True)
+    application.run(threaded=True)
