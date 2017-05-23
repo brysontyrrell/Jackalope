@@ -16,6 +16,7 @@ Welcome to Jackalope's documentation (still a work-in-progress)!
 
    getting_started/create_slack_app
    getting_started/deployment
+   getting_started/docker
 
 .. toctree::
    :caption: Backend

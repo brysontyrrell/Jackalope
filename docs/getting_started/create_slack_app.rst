@@ -39,4 +39,4 @@ use with the deployed application environment:
    :width: 500 px
 
 .. note:: You will need to set these into environment variables details in the
-   deployment documentation (:mod:`Environment Variables <jackalope.config>`).
+   deployment documentation. See :ref:`environment-variables`.

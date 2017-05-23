@@ -53,6 +53,11 @@ detailed below.
     
         https://api.slack.com/apps
 
+.. note:: The following database values are required when connecting Jackalope
+    to a MySQL server. If they are omitted, a SQLite database will be created
+    within the application directory. This is *not* recommended for production
+    deployments.
+
 .. envvar:: DATABASE_URL
 
     The URL to the MySQL server with the port.
@@ -96,9 +101,14 @@ DATABASE_NAME = os.getenv('DATABASE_NAME')
 DATABASE_USER = os.getenv('DATABASE_USER')
 DATABASE_PASSWD = os.getenv('DATABASE_PASSWD')
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}/{}?charset=utf8'.format(
-    DATABASE_USER,
-    DATABASE_PASSWD,
-    DATABASE_URL,
-    DATABASE_NAME
-)
+if not (DATABASE_URL and DATABASE_NAME and DATABASE_USER and DATABASE_PASSWD):
+    APP_DIR = os.path.dirname(os.path.realpath(__file__))
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////{}'.format(
+        os.path.join(APP_DIR, 'jackalope.db'))
+else:
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}/{}?charset=utf8'.format(
+        DATABASE_USER,
+        DATABASE_PASSWD,
+        DATABASE_URL,
+        DATABASE_NAME
+    )

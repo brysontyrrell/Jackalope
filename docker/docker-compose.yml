@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      - MYSQL_SERVER=mysql
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    networks:
+      - db
+
+  web:
+    build:
+      context: ./web
+      args:
+        - MYSQL_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+    container_name: web
+    restart: always
+    environment:
+      - DATABASE_URL=mysql
+      - DEBUG
+      - SECRET_KEY
+      - SERVER_NAME
+      - SLACK_CLIENT_ID
+      - SLACK_CLIENT_SECRET
+      - SLACK_SHAREABLE_URL
+    networks:
+      - proxy
+      - db
+    depends_on:
+      - mysql
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - proxy
+    depends_on:
+      - web
+
+networks:
+  proxy:
+  db:
+
+volumes:
+  mysql:
