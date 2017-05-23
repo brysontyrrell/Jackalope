@@ -5,6 +5,13 @@ from sqlalchemy.exc import SQLAlchemyError
 blueprint = Blueprint('errors', __name__)
 
 
+@blueprint.app_errorhandler(Exception)
+def general_exception(err):
+    """Catch-all error handler for unhandled exceptions."""
+    current_app.logger.exception(err)
+    return 'Internal server error (unknown). Check logs.', 500
+
+
 @blueprint.app_errorhandler(SQLAlchemyError)
 def sqlalchemy_error(err):
     """Internal error for database access exceptions."""

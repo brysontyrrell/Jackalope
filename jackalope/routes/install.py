@@ -37,14 +37,13 @@ def install():
     database, a UUID will be generated for receiving Jamf Pro webhooks, and a
     success message displayed in the Slack channel.
     
-    If the application already exists in the database its details will be
-    updated with those from the response and a "re-installed" message will be
-    displayed in the channel.
+    If the Slack channel already exists in the database its details will be
+    updated with those from the response.
     """
 
     code = request.args.get('code')
     if code:
-        url = url_for('.install', _external=True, _scheme='https')
+        url = url_for('install.install', _external=True, _scheme='https')
         params = {
             'code': code,
             'client_id': current_app.config['SLACK_CLIENT_ID'],
@@ -78,25 +77,24 @@ def install():
                 for key in channel_data.viewkeys():
                     setattr(channel, key, channel_data[key])
 
-                text = "Jackalope was re-installed in this channel."
-
             else:
                 channel = SlackChannel(**channel_data)
                 db.session.add(channel)
-                text = (
-                    "Jackalope has been installed in this channel!\n\n"
-                    "Create webhooks in your Jamf Pro server using this url:\n"
-                    "*{}*\n\nThey will appear here as notifications.".format(
-                        url_for(
-                            'jamfpro.jamf_webhook',
-                            jamf_uuid=channel.jamf_uuid,
-                            _external=True,
-                            _scheme='https'
-                        )
-                    )
-                )
 
             db.session.commit()
+
+            text = (
+                "Jackalope has been installed in this channel! Create webhooks "
+                "(in `JSON` format) in your Jamf Pro server using this url:\n"
+                "{}\n\nThey will appear here as notifications.".format(
+                    url_for(
+                        'jamfpro.jamf_webhook',
+                        _external=True,
+                        _scheme='https',
+                        jamf_uuid=channel.jamf_uuid
+                    )
+                )
+            )
 
             message = {
                 "attachments": [
@@ -117,4 +115,4 @@ def install():
                                      'to install to a channel:')
             current_app.logger.error(data)
 
-    return redirect(url_for('.root', _external=True, _scheme='https'))
+    return redirect(url_for('install.root', _external=True, _scheme='https'))

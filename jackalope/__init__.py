@@ -7,7 +7,7 @@ from .routes import register_routes
 
 
 __title__ = 'jackalope'
-__version__ = '0.1'
+__version__ = '0.1.1'
 __author__ = 'Bryson Tyrrell'
 __copyright__ = '(c) 2017 Bryson Tyrrell'
 
