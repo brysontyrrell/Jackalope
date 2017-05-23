@@ -6,6 +6,8 @@ gives a wide variety of options in deploying the application in your environment
 from installing onto a standalone server, a cloud instance, or within a
 container.
 
+.. note:: If you are testing, skip to :ref:`run-from-application-py` below.
+
 You will need the following components to deploy the application:
 
    * A web server or load balancer to serve traffic over TLS
@@ -21,6 +23,13 @@ In a cloud instance deployments you can use services such as:
    * `Amazon Elastic Beanstalk <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html>`_
    * `Heroku <https://devcenter.heroku.com/articles/getting-started-with-python#introduction>`_
    * `Google Apps Engine <https://cloud.google.com/appengine/docs/standard/python/getting-started/python-standard-env>`_
+
+.. _run-from-application-py:
+
+Run from application.py
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: application
 
 .. _testing-with-ngrok:
 
@@ -60,11 +69,6 @@ Environment Variables
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: jackalope.config
-
-Run from application.py
-^^^^^^^^^^^^^^^^^^^^^^^
-
-.. automodule:: application
 
 Using create_app()
 ^^^^^^^^^^^^^^^^^^
