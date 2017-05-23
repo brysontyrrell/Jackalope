@@ -17,7 +17,19 @@ def jamf_webhook(jamf_uuid):
     """The receiver endpoint where ``jamf_uuid`` is the auto-generated UUID for
      and installed Slack channel.
      
+     Inbound webhooks must be in JSON format or a 400 error will be returned.
+     
+     If a supported webhook event has been received it will be formatted into
+     a Slack message via
+     :func:`jackalope.routes.jamfpro.webhooks.webhook_notification` and sent via
+     :func:`jackalope.slack.send_notification`.
+     
      :param str jamf_uuid: The generated UUID for the installed Slack channel.
+     
+     :raises: SlackChannelLookupError
+     :raises: JSONNotProvided
+     
+     :returns: HTTP 204 success response.
      """
     try:
         channel = SlackChannel.query.filter_by(jamf_uuid=jamf_uuid).one()
@@ -32,4 +44,4 @@ def jamf_webhook(jamf_uuid):
     if message:
         send_notification(channel.slack_webhook_url, message)
 
-    return '', 200
+    return '', 204

@@ -6,6 +6,9 @@
 Jackalope: a slacky Jamf Pro notification plugin
 ================================================
 
+.. image:: images/jackalope.png
+   :align: center
+
 Welcome to Jackalope's documentation (still a work-in-progress)!
 
 .. toctree::
@@ -14,3 +17,9 @@ Welcome to Jackalope's documentation (still a work-in-progress)!
    getting_started/create_slack_app
    getting_started/deployment
 
+.. toctree::
+   :caption: Backend
+
+   backend/routes
+   backend/notifications
+   backend/exceptions
