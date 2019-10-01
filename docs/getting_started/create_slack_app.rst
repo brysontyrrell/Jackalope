@@ -8,13 +8,13 @@ team at https://api.slack.com/apps .
    :align: center
    :width: 400 px
 
-You will need to enable ``Incoming Webhooks``...
+You will need to enable ``Incoming Webhooks``, located at `Features > Incoming Webhooks`...
 
 .. image:: ../images/slack_create_app_2.png
    :align: center
    :width: 500 px
 
-...and set a ``Redirect URL`` that points to:
+...and set a ``Redirect URL``, located at `Features > OAuth & Permissions` that points to:
 
    *https://jackalope.mydomain.org/install*
 
